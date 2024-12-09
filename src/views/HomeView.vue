@@ -19,6 +19,7 @@ const options: any = [{
 
 
 onMounted(() => {
+  // 获取中国地图geo数据
   fetch('http://localhost:5173/src/components/geo/china.json').then(response => response.json()).then((ChinaGeo) => {
     mapInstance.value && mapInstance.value.remove()
     initMap({ lat: 29.538971, lng: 106.524179, zoom: 5, ChinaGeo })
@@ -31,6 +32,16 @@ watch(() => type.value, (val: any) => {
     initMap({ lat: 29.538971, lng: 106.524179, zoom: 5, ChinaGeo })
   })
 })
+/**
+ * 
+ * @param param
+ * 
+ *  lat 纬度 
+ *  lng 经度
+ *  zoom 缩放
+ *  ChinaGeo 中国geo 数据也可替换为单独省、市、县
+ * 
+ */
 
 function initMap({ lat, lng, zoom, ChinaGeo }: { lat: string | number, lng: string | number, zoom: string | number, ChinaGeo: any }) {
   mapInstance.value = L.map('map', {
@@ -57,7 +68,7 @@ function initMap({ lat, lng, zoom, ChinaGeo }: { lat: string | number, lng: stri
         tileSize: 256,
         zoom: zoom, // 缩放值
         zoomOffset: 0, // 缩放偏移量
-        mode: type.value // 裁剪类型
+        mode: type.value // 裁剪类型  【show、 clip】
       }).addTo(mapInstance.value);
   }
 }
